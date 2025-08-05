@@ -1,0 +1,12 @@
+{
+  "name": "state-adapter",
+  "version": "1.0.0",
+  "description": "State adapter for a target system.",
+  "main": "src/adapter.js",
+  "scripts": {
+    "start": "node src/adapter.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.3"
+  }
+}
