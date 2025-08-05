@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "QksukSX7L9o=",
+  "success": true,
+  "projectFilePath": "D:\\work\\Test\\LabTechOpenPlatform\\src2\\csharp-adapter\\csharp-adapter.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\YQG\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\YQG\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\YQG\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "C:\\Users\\YQG\\.nuget\\packages\\stackexchange.redis\\2.8.58\\stackexchange.redis.2.8.58.nupkg.sha512",
+    "C:\\Users\\YQG\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
