@@ -1,5 +1,7 @@
 using LabTech.GarnetAdapter;
+using Serilog;
 using System;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,51 +9,63 @@ namespace ExampleAdapterB
 {
     class Program
     {
-        const string GarnetConnectionString = "localhost:6379";
-        const string SystemId = "system-Example-B";
-
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("--- 示例适配器 B ---");
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.AppSettings()
+                .Enrich.FromLogContext()
+                .CreateLogger();
 
-            // 1. 创建适配器客户端实例
-            var adapter = GarnetAdapterClient.CreateAsync(GarnetConnectionString, SystemId).Result;
+            var logger = Log.ForContext<Program>();
 
-            // 2. 定义此适配器独特的状态生成逻辑
-            adapter.StateGenerator = () =>
+            try
             {
-                var random = new Random();
-                return new
+                var garnetConnectionString = ConfigurationManager.AppSettings["GarnetConnectionString"];
+                var systemId = ConfigurationManager.AppSettings["SystemId"];
+
+                logger.Information("--- 示例适配器 B ---");
+
+                var adapter = await GarnetAdapterClient.CreateAsync(garnetConnectionString, systemId, logger);
+
+                adapter.StateGenerator = () =>
                 {
-                    SystemId,
-                    Timestamp = DateTime.UtcNow.ToString("o"),
-                    Status = "healthy",
-                    Data = new
+                    var random = new Random();
+                    return new
                     {
-                        Temperature = random.Next(20, 35),
-                        Humidity = $"{random.Next(40, 60)}%"
-                    }
+                        SystemId = systemId,
+                        Timestamp = DateTime.UtcNow.ToString("o"),
+                        Status = "healthy",
+                        Data = new
+                        {
+                            Temperature = random.Next(20, 35),
+                            Humidity = $"{random.Next(40, 60)}%"
+                        }
+                    };
                 };
-            };
 
-            // 3. 定义此适配器独特的指令处理逻辑
-            adapter.OnCommandReceived = (message) =>
+                adapter.OnCommandReceived = (message) =>
+                {
+                    logger.Warning("执行了重启指令: {Message}", message);
+                };
+
+                var cts = new CancellationTokenSource();
+                Console.CancelKeyPress += (s, e) =>
+                {
+                    logger.Information("正在关闭适配器...");
+                    cts.Cancel();
+                    e.Cancel = true;
+                };
+
+                await adapter.RunAsync(cts.Token);
+            }
+            catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"\n[{SystemId}] 执行了重启指令: {message}");
-                Console.ResetColor();
-            };
-
-            // 4. 运行适配器
-            var cts = new CancellationTokenSource();
-            Console.CancelKeyPress += (s, e) =>
+                logger.Fatal(ex, "应用程序启动失败");
+            }
+            finally
             {
-                Console.WriteLine("正在关闭适配器...");
-                cts.Cancel();
-                e.Cancel = true;
-            };
-
-            adapter.RunAsync(cts.Token).Wait();
+                Log.CloseAndFlush();
+            }
         }
     }
 }
