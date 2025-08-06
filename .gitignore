@@ -394,3 +394,6 @@ obj/Debug/
 *.pdb
 */bin/Debug/
 
+# Custom ignores
+release/
+release-linux/
