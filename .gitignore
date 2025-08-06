@@ -387,10 +387,10 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
-bin/
-obj/
+*/bin/
+*/obj/
 obj/Debug/
 *.exe
 *.pdb
-bin/Debug/
+*/bin/Debug/
 
