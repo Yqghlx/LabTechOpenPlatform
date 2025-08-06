@@ -1,0 +1,6 @@
+D:\work\Test\LabTechOpenPlatform\src2\csharp-adapter\obj\Debug\net9.0\csharp-adapter.csproj.AssemblyReference.cache
+D:\work\Test\LabTechOpenPlatform\src2\csharp-adapter\obj\Debug\net9.0\csharp-adapter.GeneratedMSBuildEditorConfig.editorconfig
+D:\work\Test\LabTechOpenPlatform\src2\csharp-adapter\obj\Debug\net9.0\csharp-adapter.AssemblyInfoInputs.cache
+D:\work\Test\LabTechOpenPlatform\src2\csharp-adapter\obj\Debug\net9.0\csharp-adapter.AssemblyInfo.cs
+D:\work\Test\LabTechOpenPlatform\src2\csharp-adapter\obj\Debug\net9.0\csharp-adapter.csproj.CoreCompileInputs.cache
+D:\work\Test\LabTechOpenPlatform\src2\csharp-adapter\obj\Debug\net9.0\csharp-adapter.sourcelink.json
