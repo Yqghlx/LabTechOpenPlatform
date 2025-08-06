@@ -3,10 +3,6 @@
 using StackExchange.Redis;
 using System.Text.Json;
 
-// --- 1. 配置信息 (必须和 Node.js Hub 保持一致) ---
-const string RedisConnectionString = "localhost:6379"; // Redis 服务器地址
-const string SystemId = "system-C-sharp"; // 为这个 C# 适配器取一个新名字
-
 // 定义频道名称
 class Channels
 {
@@ -24,8 +20,12 @@ class SystemState
 }
 
 // --- 2. 主程序 ---
-class Program
+partial class Program
 {
+    // --- 1. 配置信息 (必须和 Node.js Hub 保持一致) ---
+    const string RedisConnectionString = "localhost:6379"; // Redis 服务器地址
+    const string SystemId = "system-C-sharp"; // 为这个 C# 适配器取一个新名字
+
     static async Task Main(string[] args)
     {
         Console.WriteLine($"[C# Adapter: {SystemId}] 正在启动...");
@@ -41,7 +41,7 @@ class Program
 
             // --- 4. 订阅专属的控制指令频道 ---
             string controlChannel = $"{Channels.ControlCommands}:{SystemId}";
-            await subscriber.SubscribeAsync(controlChannel, (channel, message) =>
+            await subscriber.SubscribeAsync(new RedisChannel(controlChannel, RedisChannel.PatternMode.Literal), (channel, message) =>
             {
                 // 当收到消息时，执行此回调
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -89,7 +89,7 @@ class Program
             string jsonState = JsonSerializer.Serialize(state);
 
             // 向公共的状态频道发布消息
-            await subscriber.PublishAsync(Channels.StateUpdates, jsonState);
+            await subscriber.PublishAsync(new RedisChannel(Channels.StateUpdates, RedisChannel.PatternMode.Literal), jsonState);
 
             Console.WriteLine($"[{SystemId}] 已发送状态更新。CPU: {state.Metrics["cpu"]}");
 

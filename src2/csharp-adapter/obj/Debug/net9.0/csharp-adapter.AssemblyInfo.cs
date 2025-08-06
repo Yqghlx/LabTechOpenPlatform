@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("csharp-adapter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+875ee433e7b0e8bf9f11e89e0b777dab1c26d14b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18134eefc93732936ef62441db662225a6819f38")]
 [assembly: System.Reflection.AssemblyProductAttribute("csharp-adapter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("csharp-adapter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
