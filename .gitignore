@@ -46,3 +46,26 @@ lerna-debug.log*
 # Optional build output directory
 dist/
 build/
+
+# C# specific
+*.cs.user
+*.csproj.user
+*.props
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*~
+*.*~
+*.dbmdl
+*.dbml.layout
+*.pfx
+*.snk
+*.[Cc]ache
+*.[Ss]ettings
+/TestResults
+/ReSharper*
