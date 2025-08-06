@@ -1,6 +1,7 @@
 using LabTech.GarnetAdapter;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 using System;
 using System.Configuration;
 using System.Threading;
@@ -12,9 +13,15 @@ namespace ExampleAdapterB
     {
         static async Task Main(string[] args)
         {
+            // --- 通过代码直接配置 Serilog，不再依赖 App.config 的 serilog: 键 ---
+            var logPath = ConfigurationManager.AppSettings["LogPath"] ?? "logs/adapter-b-.log";
+
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.AppSettings()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+                .WriteTo.File(logPath, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
                 .CreateLogger();
 
             var serilogLogger = Log.ForContext<Program>();
@@ -30,7 +37,7 @@ namespace ExampleAdapterB
                     throw new InvalidOperationException("必要的配置缺失，程序无法启动。");
                 }
 
-                var msLogger = new Serilog.Extensions.Logging.SerilogLoggerFactory(Log.Logger).CreateLogger(typeof(Program).FullName);
+                var msLogger = new Serilog.Extensions.Logging.SerilogLoggerFactory(Log.Logger).CreateLogger(typeof(Program).FullName!);
 
                 serilogLogger.Information("--- 示例适配器 B ---");
 

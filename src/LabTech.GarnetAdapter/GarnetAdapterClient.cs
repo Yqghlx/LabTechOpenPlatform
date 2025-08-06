@@ -89,7 +89,7 @@ namespace LabTech.GarnetAdapter
                     await _subscriber.PublishAsync(new RedisChannel("state_updates", RedisChannel.PatternMode.Literal), jsonState);
                     _logger.LogDebug("[{SystemId}] 已发布状态更新。", _systemId);
 
-                    await Task.Delay(5000, cancellationToken);
+                    await Task.Delay(1000, cancellationToken);
                 }
                 catch (TaskCanceledException)
                 {
