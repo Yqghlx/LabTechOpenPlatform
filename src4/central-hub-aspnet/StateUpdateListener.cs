@@ -2,8 +2,8 @@ using StackExchange.Redis;
 
 namespace CentralHub.Garnet;
 
-// This background service is responsible for listening to the state_updates channel.
-// It's the ASP.NET Core equivalent of the `setupStateListener` function in the Node.js version.
+// 这个后台服务负责监听 state_updates 频道。
+// 它相当于 Node.js 版本中的 `setupStateListener` 函数的 ASP.NET Core 实现。
 public class StateUpdateListener : BackgroundService
 {
     private readonly ILogger<StateUpdateListener> _logger;
@@ -17,7 +17,7 @@ public class StateUpdateListener : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("State Update Listener is starting.");
+        _logger.LogInformation("状态更新监听器正在启动。");
 
         var subscriber = _garnet.GetSubscriber();
         var db = _garnet.GetDatabase();
@@ -29,29 +29,29 @@ public class StateUpdateListener : BackgroundService
                 var state = System.Text.Json.JsonSerializer.Deserialize<SystemState>(message!);
                 if (state?.SystemId is null)
                 {
-                    _logger.LogWarning("Received a state update without a SystemId.");
+                    _logger.LogWarning("收到一个没有 SystemId 的状态更新。");
                     return;
                 }
 
                 var key = $"system:{state.SystemId}";
-                // Store the latest state. The TTL (Time-To-Live) of 1 hour cleans up stale systems.
+                // 存储最新状态。1小时的生存时间（TTL）用于清理过期的系统数据。
                 await db.StringSetAsync(key, message, TimeSpan.FromHours(1));
-                _logger.LogInformation("Processed state update for: {SystemId}", state.SystemId);
+                _logger.LogInformation("已处理来自 {SystemId} 的状态更新。", state.SystemId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing state update message.");
+                _logger.LogError(ex, "处理状态更新消息时出错。");
             }
         });
 
-        _logger.LogInformation("Listening for state updates on channel: {ChannelName}", Channels.StateUpdates);
+        _logger.LogInformation("正在监听频道 {ChannelName} 上的状态更新。", Channels.StateUpdates);
 
-        // Keep the service running
+        // 保持服务持续运行
         await Task.Delay(Timeout.Infinite, stoppingToken);
     }
 }
 
-// Shared classes for data consistency
+// 用于数据一致性的共享类
 public static class Channels
 {
     public const string StateUpdates = "state_updates";
