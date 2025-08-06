@@ -6,7 +6,7 @@ $ReleaseDir = "$RootDir\release"
 $HubDir = "$ReleaseDir\CentralHub"
 $GarnetSourceDir = "$RootDir\Garnet"
 $GarnetTargetDir = "$ReleaseDir\Garnet"
-$ProjectFile = "$RootDir\src5\central-hub-aspnet\central-hub-aspnet.csproj"
+$ProjectFile = "$RootDir\src\central-hub-aspnet\central-hub-aspnet.csproj"
 
 # 2. Clean and create the entire release directory structure
 Write-Host "Cleaning up the old '$ReleaseDir' directory..."

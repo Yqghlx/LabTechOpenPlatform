@@ -1,5 +1,6 @@
 using LabTech.GarnetAdapter;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.IO;
@@ -22,16 +23,24 @@ namespace ExampleAdapterA
                 .Enrich.FromLogContext()
                 .CreateLogger();
 
-            var logger = Log.ForContext<Program>();
+            var serilogLogger = Log.ForContext<Program>();
 
             try
             {
                 var garnetConnectionString = configuration["GarnetConnectionString"];
                 var systemId = configuration["SystemId"];
 
-                logger.Information("--- 示例适配器 A ---");
+                if (string.IsNullOrEmpty(garnetConnectionString) || string.IsNullOrEmpty(systemId))
+                {
+                    serilogLogger.Fatal("配置缺失: 必须在 appsettings.json 中提供 GarnetConnectionString 和 SystemId。");
+                    throw new InvalidOperationException("必要的配置缺失，程序无法启动。");
+                }
 
-                var adapter = await GarnetAdapterClient.CreateAsync(garnetConnectionString, systemId, logger);
+                var msLogger = new Serilog.Extensions.Logging.SerilogLoggerFactory(Log.Logger).CreateLogger(typeof(Program).FullName!);
+
+                serilogLogger.Information("--- 示例适配器 A ---");
+
+                var adapter = await GarnetAdapterClient.CreateAsync(garnetConnectionString, systemId, msLogger);
 
                 adapter.StateGenerator = () =>
                 {
@@ -51,13 +60,13 @@ namespace ExampleAdapterA
 
                 adapter.OnCommandReceived = (message) =>
                 {
-                    logger.Information("收到指令: {Message}", message);
+                    serilogLogger.Information("收到指令: {Message}", message);
                 };
 
                 var cts = new CancellationTokenSource();
                 Console.CancelKeyPress += (s, e) =>
                 {
-                    logger.Information("正在关闭适配器...");
+                    serilogLogger.Information("正在关闭适配器...");
                     cts.Cancel();
                     e.Cancel = true;
                 };
@@ -66,7 +75,7 @@ namespace ExampleAdapterA
             }
             catch (Exception ex)
             {
-                logger.Fatal(ex, "应用程序启动失败");
+                serilogLogger.Fatal(ex, "应用程序启动失败");
             }
             finally
             {
