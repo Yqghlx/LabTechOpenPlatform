@@ -4,7 +4,7 @@ using CentralHub.Garnet;
 var builder = WebApplication.CreateBuilder(args);
 
 // --- Dependency Injection ---
-const string GarnetConnectionString = "localhost:3278";
+const string GarnetConnectionString = "localhost:6379";
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp => 
     ConnectionMultiplexer.Connect(GarnetConnectionString)
 );

@@ -2,7 +2,7 @@ using StackExchange.Redis;
 using System.Text.Json;
 
 // --- 1. Configuration ---
-const string GarnetConnectionString = "localhost:3278";
+const string GarnetConnectionString = "localhost:6379";
 const string SystemId = "system-B-aspnet"; // A new, unique ID for this adapter
 
 Console.WriteLine($"[{SystemId}] ASP.NET State Adapter starting...");
@@ -57,7 +57,7 @@ static async Task PublishStateLoop(ISubscriber publisher)
         };
 
         string jsonState = JsonSerializer.Serialize(state);
-        await publisher.PublishAsync("state_updates", jsonState);
+        await publisher.PublishAsync(new RedisChannel("state_updates", RedisChannel.PatternMode.Literal), jsonState);
         Console.WriteLine($"[{SystemId}] State update sent. Temperature: {state.Metrics["temperature"]}");
 
         await Task.Delay(5000);

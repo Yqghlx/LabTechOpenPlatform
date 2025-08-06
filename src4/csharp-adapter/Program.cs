@@ -23,7 +23,7 @@ class SystemState
 partial class Program
 {
     // --- 1. 配置信息 ---
-    const string GarnetConnectionString = "localhost:3278"; // Garnet server address (default port)
+    const string GarnetConnectionString = "localhost:6379"; // Garnet server address (default port)
     const string SystemId = "system-C-sharp-garnet"; // A new name for this C# adapter
 
     static async Task Main(string[] args)
