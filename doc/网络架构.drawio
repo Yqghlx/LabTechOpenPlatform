@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
   <diagram name="Page-1" id="e3a06f82-3646-2815-327d-82caf3d4e204">
-    <mxGraphModel dx="1680" dy="-250" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1491" dy="-345" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" style=";html=1;" />
         <mxCell id="1" style=";html=1;" parent="0" />
@@ -31,7 +31,7 @@
             <mxPoint x="550" y="1440" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="xhLkIpY-koGyzuCt2MT0-6" value="1.发布状态" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="xhLkIpY-koGyzuCt2MT0-5" vertex="1" connectable="0">
+        <mxCell id="xhLkIpY-koGyzuCt2MT0-6" value="1.发布状态至消息队列" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="xhLkIpY-koGyzuCt2MT0-5" vertex="1" connectable="0">
           <mxGeometry x="-0.0771" y="1" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -42,7 +42,7 @@
             <mxPoint x="500" y="1580" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="xhLkIpY-koGyzuCt2MT0-8" value="D.订阅控制" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="xhLkIpY-koGyzuCt2MT0-7" vertex="1" connectable="0">
+        <mxCell id="xhLkIpY-koGyzuCt2MT0-8" value="D.从消息队列订阅控制" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="xhLkIpY-koGyzuCt2MT0-7" vertex="1" connectable="0">
           <mxGeometry x="-0.0282" y="3" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -201,6 +201,12 @@
           <mxGeometry x="0.1428" y="1" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="7GA7ZUjrnT-zNd8jKCXN-13" value="职责：&lt;div&gt;1.使用web API对外开放状态查询和控制接口&lt;br&gt;&lt;div&gt;2.订阅状态通道，并将状态分系统存储到缓存数据库&lt;/div&gt;&lt;div&gt;3.将收到的控制指令发布到消息队列&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="771.2" y="1970" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="7GA7ZUjrnT-zNd8jKCXN-14" value="安全和稳定性优化：&lt;div&gt;1.密钥管理&lt;/div&gt;&lt;div&gt;2.启用HTTPS&lt;/div&gt;&lt;div&gt;3.API认证&lt;/div&gt;&lt;div&gt;4自动化部署等&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="1580.5" width="130" height="90" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
