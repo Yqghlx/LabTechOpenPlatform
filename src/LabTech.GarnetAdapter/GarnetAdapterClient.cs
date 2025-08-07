@@ -61,6 +61,7 @@ namespace LabTech.GarnetAdapter
             {
                 _logger.LogDebug("[{SystemId}] 从频道 {Channel} 收到消息。", _systemId, ch);
                 OnCommandReceived.Invoke(msg!); 
+                _logger.LogInformation("[{SystemId}] 收到并处理了指令。详情: {Message}", _systemId, msg); 
             });
 
             _logger.LogInformation("[{SystemId}] 已订阅频道: {Channel}", _systemId, controlChannel);
@@ -88,7 +89,7 @@ namespace LabTech.GarnetAdapter
                     string jsonState = JsonSerializer.Serialize(state);
 
                     await _subscriber.PublishAsync(new RedisChannel("state_updates", RedisChannel.PatternMode.Literal), jsonState);
-                    _logger.LogDebug("[{SystemId}] 已发布状态更新。", _systemId);
+                    _logger.LogInformation("[{SystemId}] 已发布状态更新。内容: {State}", _systemId, jsonState);
 
                     await Task.Delay(StateUpdateInterval, cancellationToken);
                 }

@@ -208,13 +208,13 @@
         <mxCell id="7GA7ZUjrnT-zNd8jKCXN-14" value="安全和稳定性优化：&lt;div&gt;1.密钥管理&lt;/div&gt;&lt;div&gt;2.启用HTTPS&lt;/div&gt;&lt;div&gt;3.API认证&lt;/div&gt;&lt;div&gt;4自动化部署等&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="1510" y="1880" width="130" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="7GA7ZUjrnT-zNd8jKCXN-15" value="问题：&lt;div&gt;1.使用windows还是linux服务器？&lt;/div&gt;&lt;div&gt;2.要不要启用https？&lt;/div&gt;&lt;div&gt;3.要不要启用api key&lt;/div&gt;&lt;div&gt;4.是否支持.net framework和.net 5+&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+        <mxCell id="7GA7ZUjrnT-zNd8jKCXN-15" value="问题：&lt;div&gt;1.使用windows还是linux服务器？&lt;/div&gt;&lt;div&gt;2.要不要启用https？&lt;/div&gt;&lt;div&gt;3.要不要启用api key&lt;/div&gt;&lt;div&gt;4.是否支持.net framework和.net 5+&lt;/div&gt;&lt;div&gt;5.第三方是内网还是外网？&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="1510" y="1965" width="210" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="HTJKUVVNHFAjImTZ3lWB-1" value="控制指令通道" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.azure.queue_generic" vertex="1" parent="1">
+        <mxCell id="HTJKUVVNHFAjImTZ3lWB-1" value="控制指令通道" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.azure.queue_generic" parent="1" vertex="1">
           <mxGeometry x="590" y="1627" width="66.67" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="HTJKUVVNHFAjImTZ3lWB-4" value="Garnet/Redis/&lt;div&gt;RabbitMQ/&lt;/div&gt;&lt;div&gt;KAFKA&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+        <mxCell id="HTJKUVVNHFAjImTZ3lWB-4" value="Garnet/Redis/&lt;div&gt;RabbitMQ/&lt;/div&gt;&lt;div&gt;KAFKA&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="573.34" y="1680" width="100" height="70" as="geometry" />
         </mxCell>
       </root>

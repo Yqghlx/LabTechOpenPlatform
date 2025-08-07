@@ -13,8 +13,10 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((context, configuration) => 
-        configuration.ReadFrom.Configuration(context.Configuration));
+    builder.Host.UseSerilog((context, services, configuration) => configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext());
 
     var garnetConnectionString = builder.Configuration.GetConnectionString("Garnet");
 
@@ -25,6 +27,9 @@ try
     builder.Services.AddHostedService<StateUpdateListener>();
 
     var app = builder.Build();
+
+    // 添加 Serilog 请求日志记录中间件
+    app.UseSerilogRequestLogging();
 
     app.MapGet("/api/systems/{systemId}/status", async (string systemId, IConnectionMultiplexer garnet, ILogger<Program> logger) =>
     {
