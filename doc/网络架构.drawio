@@ -208,6 +208,9 @@
         <mxCell id="7GA7ZUjrnT-zNd8jKCXN-14" value="安全和稳定性优化：&lt;div&gt;1.密钥管理&lt;/div&gt;&lt;div&gt;2.启用HTTPS&lt;/div&gt;&lt;div&gt;3.API认证&lt;/div&gt;&lt;div&gt;4自动化部署等&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="1590" y="1580.5" width="130" height="90" as="geometry" />
         </mxCell>
+        <mxCell id="7GA7ZUjrnT-zNd8jKCXN-15" value="问题：&lt;div&gt;1.使用windows还是linux服务器？&lt;/div&gt;&lt;div&gt;2.要不要启用https？&lt;/div&gt;&lt;div&gt;3.要不要启用api key&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="1790" width="200" height="70" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
