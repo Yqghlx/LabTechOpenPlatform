@@ -66,7 +66,7 @@ namespace ExampleAdapterB
 
                 adapter.OnCommandReceived = (message) =>
                 {
-                    serilogLogger.Warning("执行了重启指令: {Message}", message);
+                    serilogLogger.Information("收到指令: {Message}", message);
                 };
 
                 var cts = new CancellationTokenSource();
