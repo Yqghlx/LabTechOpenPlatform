@@ -43,6 +43,11 @@ namespace ExampleAdapterB
 
                 var adapter = await GarnetAdapterClient.CreateAsync(garnetConnectionString, systemId, msLogger);
 
+                if (int.TryParse(ConfigurationManager.AppSettings["StateUpdateInterval"], out int updateInterval))
+                {
+                    adapter.StateUpdateInterval = updateInterval;
+                }
+
                 adapter.StateGenerator = () =>
                 {
                     var random = new Random();
