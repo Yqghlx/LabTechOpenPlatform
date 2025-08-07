@@ -65,8 +65,4 @@ public class SystemState
     public string? Status { get; set; }
 }
 
-public class ControlCommand
-{
-    public string? Action { get; set; }
-    public string? SystemId { get; set; }
-}
+

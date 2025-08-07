@@ -40,22 +40,19 @@ try
         return Results.Content(state!, "application/json");
     });
 
-    app.MapPost("/api/systems/{systemId}/control", async (string systemId, ControlCommand command, IConnectionMultiplexer garnet) =>
+    app.MapPost("/api/systems/{systemId}/control", async (string systemId, Dictionary<string, object> command, IConnectionMultiplexer garnet) =>
     {
-        if (string.IsNullOrEmpty(command.Action))
-        {
-            return Results.BadRequest(new { error = "无效的指令格式，'action' 字段是必需的。" });
-        }
-
         var subscriber = garnet.GetSubscriber();
         var controlChannel = $"{Channels.ControlCommands}:{systemId}";
-        command.SystemId = systemId;
+
+        // 将 systemId 添加到命令字典中，以便适配器可以识别命令来源
+        command["SystemId"] = systemId;
 
         var message = System.Text.Json.JsonSerializer.Serialize(command);
 
         await subscriber.PublishAsync(new RedisChannel(controlChannel, RedisChannel.PatternMode.Literal), message);
         
-        app.Logger.LogInformation("已向 '{SystemId}' 的频道发送指令 '{Action}'。", command.Action, systemId);
+        app.Logger.LogInformation("向频道 {Channel} 发送了控制命令。", controlChannel);
 
         return Results.Ok(new { message = "指令已发送。" });
     });
