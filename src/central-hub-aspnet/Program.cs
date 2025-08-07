@@ -26,17 +26,19 @@ try
 
     var app = builder.Build();
 
-    app.MapGet("/api/systems/{systemId}/status", async (string systemId, IConnectionMultiplexer garnet) =>
+    app.MapGet("/api/systems/{systemId}/status", async (string systemId, IConnectionMultiplexer garnet, ILogger<Program> logger) =>
     {
         var db = garnet.GetDatabase();
         var key = $"system:{systemId}";
         var state = await db.StringGetAsync(key);
 
         if (state.IsNullOrEmpty)
-        {
+        {   
+            logger.LogWarning("未找到 systemId 为 '{SystemId}' 的状态。", systemId);
             return Results.NotFound(new { error = "未找到系统，或尚未收到任何状态。" });
         }
 
+        logger.LogInformation("成功检索到 systemId 为 '{SystemId}' 的状态。", systemId);
         return Results.Content(state!, "application/json");
     });
 
