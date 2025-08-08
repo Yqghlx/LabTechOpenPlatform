@@ -5,7 +5,6 @@ using Android.OS;
 using Android.Runtime;
 using AndroidX.Core.App;
 using SocketServerLogic;
-using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using System;
 
@@ -23,14 +22,12 @@ namespace SocketServer.AndroidHost.Platforms.Android
 
         public override IBinder? OnBind(Intent? intent) => null;
 
-        [SupportedOSPlatform("android26.0")]
         public override void OnCreate()
         {
             base.OnCreate();
             CreateNotificationChannel();
         }
 
-        [SupportedOSPlatform("android29.0")]
         public override StartCommandResult OnStartCommand(Intent? intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
             var notification = CreateNotification("服务正在后台运行");
@@ -40,7 +37,6 @@ namespace SocketServer.AndroidHost.Platforms.Android
             {
                 _cts = new CancellationTokenSource();
                 _socketServer = new SocketServerLogic.SocketServer("0.0.0.0", 8888);
-                _socketServer.OnLogMessage += (message) => System.Diagnostics.Debug.WriteLine($"[SocketServer] {message}");
                 Task.Run(() => _socketServer.StartAsync(_cts.Token));
             }
 
@@ -54,9 +50,10 @@ namespace SocketServer.AndroidHost.Platforms.Android
             base.OnDestroy();
         }
 
-        [SupportedOSPlatform("android26.0")]
         private void CreateNotificationChannel()
         {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O) return;
+
             var channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "后台服务", NotificationImportance.Default);
             if (GetSystemService(NotificationService) is NotificationManager manager)
             {
@@ -64,7 +61,6 @@ namespace SocketServer.AndroidHost.Platforms.Android
             }
         }
 
-        [SupportedOSPlatform("android23.0")]
         private Notification CreateNotification(string contentText)
         {
             var mainActivityIntent = new Intent(this, typeof(MainActivity));

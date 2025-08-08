@@ -1,4 +1,3 @@
-
 using SocketServer.WindowsHost;
 
 IHost host = Host.CreateDefaultBuilder(args)

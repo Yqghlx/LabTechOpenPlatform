@@ -1,5 +1,6 @@
-
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace SocketServer.AndroidHost;
 
@@ -7,6 +8,13 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
+        // 配置 Serilog
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .Enrich.FromLogContext()
+                        .WriteTo.AndroidLog()
+            .CreateLogger();
+
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
@@ -16,10 +24,11 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-#if DEBUG
-		builder.Logging.AddDebug();
-#endif
+        // 添加 Serilog 作为日志记录提供程序
+        builder.Logging.AddSerilog(dispose: true);
 
-        return builder.Build();
+        builder.Services.AddSingleton<MainPage>();
+
+		return builder.Build();
 	}
 }
