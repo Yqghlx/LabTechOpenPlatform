@@ -1,0 +1,16 @@
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SocketServer.AndroidHost.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+            <Label Text="安卓后台服务控制器" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+            <Button x:Name="StartServiceBtn" Text="启动后台服务" Clicked="OnStartServiceClicked" HorizontalOptions="Fill" />
+            <Button x:Name="StopServiceBtn" Text="停止后台服务" Clicked="OnStopServiceClicked" HorizontalOptions="Fill" />
+            <Button x:Name="BatteryOptimizationBtn" Text="请求'忽略电池优化'权限" Clicked="OnRequestIgnoreBatteryOptimizationsClicked" HorizontalOptions="Fill" />
+            <Label Text="请先授予'忽略电池优化'权限，然后再启动服务。" Style="{StaticResource BodySmall}" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
