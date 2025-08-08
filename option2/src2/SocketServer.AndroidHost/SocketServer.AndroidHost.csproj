@@ -63,9 +63,7 @@
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 	</ItemGroup>
 
-		<ItemGroup>
-	  <MauiAsset Include="..\dev-cert.pfx" LogicalName="dev-cert.pfx" />
-	</ItemGroup>
+		
 
 	<ItemGroup>
 	  <ProjectReference Include="..\SocketServerLogic\SocketServerLogic.csproj" />
