@@ -1,24 +1,13 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
-	
-    <!-- 网络权限 (已存在) -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- 前台服务权限 -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-
-    <!-- 开机自启权限 -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-    <!-- 电池优化白名单权限 -->
 	<uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
-    <!-- (可选) 保持CPU唤醒权限 -->
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Android 13+ (API 33) 通知权限 -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 </manifest>

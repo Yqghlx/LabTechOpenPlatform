@@ -1,3 +1,4 @@
+
 namespace SocketServer.AndroidHost;
 
 public partial class MainPage : ContentPage
