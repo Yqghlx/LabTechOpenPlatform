@@ -59,7 +59,7 @@ public class SystemClient
                 }
                 catch (TaskCanceledException)
                 {
-                    // This is expected when the application is shutting down.
+                    // 这在应用程序关闭时是预期的。
                 }
             }
         }
@@ -125,7 +125,7 @@ public class SystemClient
         while (!_cts.IsCancellationRequested && _client?.Connected == true)
         {
             var messageLine = await _reader!.ReadLineAsync(_cts.Token);
-            if (messageLine == null) continue; // Server disconnected
+            if (messageLine == null) continue; // 服务器断开连接
 
             var message = JObject.Parse(messageLine);
             if (message["MessageType"]?.ToString() == "CommandRequest")
@@ -181,7 +181,7 @@ public class SystemClient
 
     public static async Task Main(string[] args)
     {
-        // You can run multiple instances of this client by changing the ClientId.
+        // 您可以通过更改 ClientId 来运行此客户端的多个实例。
         var clientId = args.Length > 0 ? args[0] : "System-A";
         var client = new SystemClient(clientId, "127.0.0.1", 8888);
         await client.StartAsync();

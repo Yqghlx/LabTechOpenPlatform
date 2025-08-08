@@ -10,7 +10,7 @@ using System.Collections.Concurrent;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-// Represents a connected client that has been successfully registered.
+// 代表一个已成功注册的连接客户端。
 public class ManagedClient
 {
     public string ClientId { get; }
@@ -32,13 +32,13 @@ public class SocketServer
     private readonly TcpListener _listener;
     private readonly CancellationTokenSource _serverCts = new CancellationTokenSource();
 
-    // Main registry for all connected and registered clients
+    // 所有已连接并注册的客户端的主注册表
     private readonly ConcurrentDictionary<string, ManagedClient> _clients = new ConcurrentDictionary<string, ManagedClient>();
     
-    // Cache for the latest status reported by system clients
+    // 缓存系统客户端报告的最新状态
     private readonly ConcurrentDictionary<string, JObject> _statusCache = new ConcurrentDictionary<string, JObject>();
 
-    // Tracks which control client is waiting for a response for a specific command
+    // 跟踪哪个控制客户端正在等待特定命令的响应
     private readonly ConcurrentDictionary<string, string> _commandTracker = new ConcurrentDictionary<string, string>();
 
     public SocketServer(string ipAddress, int port)
@@ -59,7 +59,7 @@ public class SocketServer
             {
                 TcpClient tcpClient = await _listener.AcceptTcpClientAsync(_serverCts.Token);
                 Console.WriteLine($"New client connected: {tcpClient.Client.RemoteEndPoint}");
-                // Don't await, let it run in the background
+                // 不要等待，让它在后台运行
                 _ = HandleClientConnectionAsync(tcpClient);
             }
         }
@@ -86,14 +86,14 @@ public class SocketServer
         {
             using (var reader = new StreamReader(tcpClient.GetStream(), Encoding.UTF8))
             {
-                // The first message MUST be a registration request.
-                var registrationLine = await reader.ReadLineAsync(CancellationToken.None); // No CancellationToken for initial read
-                if (registrationLine == null) return; // Client disconnected prematurely
+                // 第一条消息必须是注册请求。
+                var registrationLine = await reader.ReadLineAsync(CancellationToken.None); // 初始读取没有 CancellationToken
+                if (registrationLine == null) return; // 客户端过早断开连接
 
                 managedClient = await ProcessRegistrationAsync(registrationLine, tcpClient);
-                if (managedClient == null) return; // Registration failed
+                if (managedClient == null) return; // 注册失败
 
-                // Start processing subsequent messages from this client
+                // 开始处理来自此客户端的后续消息
                 await ProcessMessagesAsync(managedClient, reader);
             }
         }
@@ -139,7 +139,7 @@ public class SocketServer
             {
                 if (_clients.TryRemove(clientId, out var oldClient))
                 {
-                    oldClient?.Client.Close(); // Disconnect the old client
+                    oldClient?.Client.Close(); // 断开旧客户端
                 }
                 _clients.TryAdd(clientId, newClient);
                 Console.WriteLine($"Client {clientId} reconnected, closing previous session.");
@@ -170,7 +170,7 @@ public class SocketServer
         while (!client.Cts.IsCancellationRequested && client.Client.Connected)
         {
             var line = await reader.ReadLineAsync(client.Cts.Token);
-            if (line == null) break; // Client disconnected
+            if (line == null) break; // 客户端断开连接
 
             try
             {
@@ -185,7 +185,7 @@ public class SocketServer
                         if (status != null && statusClientId == client.ClientId)
                         {
                             _statusCache[statusClientId] = status;
-                            // Optional: Send an ack back
+                            // 可选：发回一个确认
                         }
                         break;
 
@@ -249,10 +249,10 @@ public class SocketServer
             targetClientId = message["Payload"]?["TargetClientId"]?.ToString();
             if (!string.IsNullOrEmpty(correlationId) && !string.IsNullOrEmpty(targetClientId))
             {
-                _commandTracker[correlationId] = sourceClient.ClientId; // Track who sent the command
+                _commandTracker[correlationId] = sourceClient.ClientId; // 跟踪谁发送了命令
             }
         }
-        else // Is CommandResponse
+        else // 是命令响应
         {
             if (!string.IsNullOrEmpty(correlationId) && _commandTracker.TryRemove(correlationId, out var originalRequesterId))
             {
@@ -260,7 +260,7 @@ public class SocketServer
             }
             else
             {
-                targetClientId = null; // No one to route to
+                targetClientId = null; // 没有人可以路由到
             }
         }
 

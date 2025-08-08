@@ -29,12 +29,12 @@ public class ControlClient
 
     public async Task StartAsync()
     {
-        Console.WriteLine("Connecting to server...");
+        Console.WriteLine("正在连接到服务器...");
         try
         {
             await ConnectAndRegisterAsync();
-            Console.WriteLine("Connected and registered successfully.");
-            Console.WriteLine("Enter commands (e.g., 'status System-A', 'command System-A get_diagnostics', or 'exit')");
+            Console.WriteLine("连接并注册成功。");
+            Console.WriteLine("输入命令 (例如, 'status System-A', 'command System-A get_diagnostics', 或 'exit')");
 
             var listeningTask = ListenForResponsesAsync();
             var commandLoopTask = RunCommandLoopAsync();
@@ -43,13 +43,13 @@ public class ControlClient
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"错误: {ex.Message}");
         }
         finally
         {
             _cts.Cancel();
             _client?.Close();
-            Console.WriteLine("Disconnected.");
+            Console.WriteLine("已断开连接。");
         }
     }
 
@@ -70,11 +70,11 @@ public class ControlClient
 
         await _writer.WriteLineAsync(registerRequest.ToString(Formatting.None));
 
-        var responseLine = await _reader.ReadLineAsync() ?? throw new IOException("Server did not respond to registration.");
+        var responseLine = await _reader.ReadLineAsync() ?? throw new IOException("服务器未响应注册请求。");
         var response = JObject.Parse(responseLine);
         if (response["Payload"]?["Success"]?.Value<bool>() != true)
         {
-            throw new Exception($"Registration failed: {response["Payload"]?["Message"]}");
+            throw new Exception($"注册失败: {response["Payload"]?["Message"]}");
         }
     }
 
@@ -96,11 +96,11 @@ public class ControlClient
                 }
                 else
                 {
-                    Console.WriteLine($"\nReceived unsolicited message:\n{message.ToString(Formatting.Indented)}");
+                    Console.WriteLine($"\n收到未经请求的消息:\n{message.ToString(Formatting.Indented)}");
                 }
             }
             catch (OperationCanceledException) { break; }
-            catch (Exception ex) { Console.WriteLine($"\nError in listener: {ex.Message}"); break; }
+            catch (Exception ex) { Console.WriteLine($"\n监听器错误: {ex.Message}"); break; }
         }
     }
 
@@ -116,7 +116,7 @@ public class ControlClient
             var parts = input.Split(new[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 2)
             {
-                Console.WriteLine("Invalid command format.");
+                Console.WriteLine("无效的命令格式。");
                 continue;
             }
 
@@ -132,18 +132,18 @@ public class ControlClient
                         response = await SendRequestAsync(BuildStatusQuery(targetClientId));
                         break;
                     case "command":
-                        if (parts.Length < 3) { Console.WriteLine("Command name is missing."); continue; }
+                        if (parts.Length < 3) { Console.WriteLine("缺少命令名称。"); continue; }
                         response = await SendRequestAsync(BuildCommandRequest(targetClientId, parts[2]));
                         break;
                     default:
-                        Console.WriteLine($"Unknown command type: {commandType}");
+                        Console.WriteLine($"未知的命令类型: {commandType}");
                         continue;
                 }
-                Console.WriteLine($"Response:\n{response.ToString(Formatting.Indented)}");
+                Console.WriteLine($"响应:\n{response.ToString(Formatting.Indented)}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error sending request: {ex.Message}");
+                Console.WriteLine($"发送请求时出错: {ex.Message}");
             }
         }
     }
@@ -168,7 +168,7 @@ public class ControlClient
         else
         {
             _pendingRequests.TryRemove(correlationId, out _);
-            throw new TimeoutException("The operation timed out or was canceled.");
+            throw new TimeoutException("操作超时或被取消。");
         }
     }
 
