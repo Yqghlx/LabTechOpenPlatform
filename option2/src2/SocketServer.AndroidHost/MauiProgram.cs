@@ -20,12 +20,6 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-        builder.Services.AddSingleton<MainPage>();
-
-		var app = builder.Build();
-
-        app.MainPage = app.Services.GetService<MainPage>();
-
-        return app;
+        return builder.Build();
 	}
 }

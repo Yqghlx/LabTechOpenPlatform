@@ -1,12 +1,11 @@
-﻿namespace SocketServer.AndroidHost
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+namespace SocketServer.AndroidHost;
 
-            MainPage = new AppShell();
-        }
-    }
+public partial class App : Application
+{
+	public App(MainPage mainPage)
+	{
+		InitializeComponent();
+
+		MainPage = mainPage;
+	}
 }
